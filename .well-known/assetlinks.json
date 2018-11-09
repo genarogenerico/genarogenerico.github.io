@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "pamegeinformatica.com.br.moving",
+    "sha256_cert_fingerprints":
+    ["B6:E8:F1:0D:6C:36:99:83:5D:22:50:B1:31:CB:A2:38:A6:DB:F3:CA:96:9F:E3:17:8A:F3:34:50:4D:A7:7B:6D"]
+  }
+}]
