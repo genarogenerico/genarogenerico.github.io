@@ -1,122 +1,73 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//PT">
-<html>
-	<head>
-		<title>Pam & Gê Informática</title>
+<?php
+$email = 'genildo.araujo77@outlook.com';
+$token = 'E17FA1D2C5024715B8D3C6C07BDD474D';
+$url = 'https://ws.pagseguro.uol.com.br/v2/checkout/?email=' . $email . '&token=' . $token;
+$xml = '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+    <checkout>
+        <currency>BRL</currency>
+        <redirectURL>http://www.minhaloja.com.br/paginaDeRedirecionamento</redirectURL>
+        <items>
+            <item>
+                <id>0001</id>
+                <description>Notebook Prata</description>
+                <amount>1.00</amount>
+                <quantity>1</quantity>
+                <weight>1000</weight>
+            </item>
+            <item>
+                <id>0002</id>
+                <description>Notebook Rosa</description>
+                <amount>2.00</amount>
+                <quantity>2</quantity>
+                <weight>750</weight>
+            </item>
+        </items>
+        <reference>REF1234</reference>
+        <sender>
+            <name>José Comprador</name>
+            <email>genildo.araujo@sandbox.pagseguro.com.br</email>
+            <phone>
+                <areaCode>11</areaCode>
+                <number>55663377</number>
+            </phone>
+        </sender>
+        <shipping>
+            <type>1</type>
+            <address>
+                <street>Rua sem nome</street>
+                <number>1384</number>
+                <complement>5o andar</complement>
+                <district>Jardim Paulistano</district>
+                <postalCode>01452002</postalCode>
+                <city>Sao Paulo</city>
+                <state>SP</state>
+                <country>BRA</country>
+            </address>
+        </shipping>
+    </checkout>';
 
-		<meta http-equiv="content-language" content="pt-br">
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-		<meta name="author" content="Pam e Ge Informatica">
-		<meta name="description" content="Site de informacoes">
-		<meta name="keywords" content="sites, web, desenvolvimento,html, css">
+$curl = curl_init($url);
+curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HTTPHEADER, Array('Content-Type: application/xml; charset=ISO-8859-1'));
+curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);
+$xml= curl_exec($curl);
 
-		<!-- Importando a folha de estilo CSS para o HTML -->
-		<link rel="stylesheet" type="text/css" href="css/layout.css">
-		
-		<link rel="shortcut icon" href="img/icon.jpg" type="image/x-icon">
+if($xml == 'Unauthorized'){
+    //Insira seu código avisando que o sistema está com problemas, sugiro enviar um e-mail avisando para alguém fazer a manutenção 
 
-	</head>
-<body>
-	<!-- INICIO TOPO -->
-	<div class="topo">
-		<div class="container">
-			<div class="logo">
-				<a href=""><img src="img/backgroundlogo.PNG"></a>
-			</div>
-			<div class="menu-topo">
-				<ul>
-					<li><a href="index.html">Home</a></li>
-					<li><a href="sobre.html">Sobre</a></li>
-					<li><a href="servicos.html">Serviços</a></li>
-					<li><a href="clientes.html">Clientes</a></li>
-					<li><a href="contato.html">Contato</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<!-- FIM TOPO -->
+    header('Location: paginaDeErro.php');
+    exit;//Mantenha essa linha
+}
 
-	<!-- INICIO main -->
-	<div class="main">
-		<div class="container">
-			<div class="main-center">
-				<h1>Página de Contato</h1>
-				<div class="contato-boxed">
-					<div class="boxed">					
-						<h2>Dados para contato</h2>
-							<form action="https://formspree.io/meuemail@meusite.com.br"
-                                  method="POST">
-    <div class="form-group">
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" id="nome" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="_replyto">Email:</label>
-        <input type="email" id="_replyto" name="_replyto" class="form-control">
-    </div>
-    <div class="form-group">
-        <label for="_subject">Assunto:</label>
-        <select name="_subject" id="_subject">
-            <option>Testar email</option>
-            <option>Ver se funciona</option>
-            <option>Pedido de ajuda</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="mensagem">Mensagem:</label>
-        <textarea name="mensagem" id="mensagem" cols="30" rows="10" class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-default">Enviar</button>
-    </div>
-</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- fim main -->
+curl_close($curl);
 
-	<div class="footer">
-		<div class="container">
-			<div class="box-footer">
-				<h4>Conheça nosso site</h4>
-				<ul>
-					<li><a href="index.html">Home</a></li>
-					<li><a href="sobre.html">Sobre</a></li>
-					<li><a href="servicos.html">Serviços</a></li>
-					<li><a href="clientes.html">Clientes</a></li>
-					<li><a href="contato.html">Contato</a></li>
-				</ul>
-			</div>
-			<div class="box-footer">
-				<h4>Contato</h4>
-				<ul>
-					<li><a href=""><i class="fa fa-envelope-o"></i> genildo.araujo77@outlook.com</a></li>
-					<li><a href=""><i class="fa fa-map-marker"></i> Alameda João Galego, 363 - Ap.6</a></li>
-					<li><a href=""><i class="fa fa-phone"></i> (11) 94468-8144</a></li>
-					<li><a href=""><i class="fa fa-globe"></i> pamegeit.com.br</a></li>
-				</ul>
-			</div>
-			<div class="box-footer">
-				<h4>Redes Sociais</h4>
-				<div class="redes-sociais">
-					<ul>
-						<li><a href=""><i class="fa fa-facebook"></i></a></li>
-						<li><a href=""><i class="fa fa-twitter"></i></a></li>
-						<li><a href=""><i class="fa fa-instagram"></i></a></li>
-						<li><a href=""><i class="fa fa-youtube"></i></a></li>
-						<li><a href=""><i class="fa fa-google-plus"></i></a></li>
-					</ul>					
-				</div>
+$xml= simplexml_load_string($xml);
 
-			</div>
-		</div>
+if(count($xml -> error) > 0){
+    //Insira seu código avisando que o sistema está com problemas, sugiro enviar um e-mail avisando para alguém fazer a manutenção, talvez seja útil enviar os códigos de erros.
+    header('Location: paginaDeErro.php');
+    exit;
+}
 
-	</div>
-	<div class="copy">
-		<div class="container">
-			<p>Desenvolvido por Genildo Araújo - Pam & Gê Informática 2018</p>
-		</div>
-	</div>
-</body>
-</html>
+header('Location: https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' . $xml -> code);
