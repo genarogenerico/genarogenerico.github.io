@@ -1,50 +1,56 @@
 <?php
-$email = 'genildo.araujo77@outlook.com';
-$token = 'E17FA1D2C5024715B8D3C6C07BDD474D';
-$url = 'https://ws.pagseguro.uol.com.br/v2/checkout/?email=' . $email . '&token=' . $token;
-$xml = '<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
-    <checkout>
-        <currency>BRL</currency>
-        <redirectURL>http://www.minhaloja.com.br/paginaDeRedirecionamento</redirectURL>
-        <items>
-            <item>
-                <id>0001</id>
-                <description>Notebook Prata</description>
-                <amount>1.00</amount>
-                <quantity>1</quantity>
-                <weight>1000</weight>
-            </item>
-            <item>
-                <id>0002</id>
-                <description>Notebook Rosa</description>
-                <amount>2.00</amount>
-                <quantity>2</quantity>
-                <weight>750</weight>
-            </item>
-        </items>
-        <reference>REF1234</reference>
-        <sender>
-            <name>José Comprador</name>
-            <email>genildo.araujo@sandbox.pagseguro.com.br</email>
-            <phone>
-                <areaCode>11</areaCode>
-                <number>55663377</number>
-            </phone>
-        </sender>
-        <shipping>
-            <type>1</type>
-            <address>
-                <street>Rua sem nome</street>
-                <number>1384</number>
-                <complement>5o andar</complement>
-                <district>Jardim Paulistano</district>
-                <postalCode>01452002</postalCode>
-                <city>Sao Paulo</city>
-                <state>SP</state>
-                <country>BRA</country>
-            </address>
-        </shipping>
-    </checkout>';
+$descricao = $_POST["descricao"];
+$qty = $_POST["quantidade"];
+$valorun = $_POST["valor"];
+
+$email = 'pamelabrittocardoso@gmail.com';
+$token = '7E20D961DE4D44F69B44990C34AD3FD5';
+$url = 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout/?email=' . $email . '&token=' . $token;
+
+//variaveis itens
+//$descricao = 'Camiseta Branca';
+//$qty = '2';
+//$tamanho = 'P';
+//$cor = 'branca';
+//$valorun = '15.00';
+//$weight = '1000';
+
+$xml = "<?xml version='1.0' encoding='UTF-8' standalone='yes'>";
+    $xml .= '<checkout>';
+        $xml .= '<currency>BRL</currency>';
+        $xml .= '<redirectURL>http://www.minhaloja.com.br/paginaDeRedirecionamento</redirectURL>';
+        $xml .= '<items>';
+            $xml .= '<item>';
+                $xml .= '<id>0001</id>';
+                $xml .= '<description>' . $descricao . '</description>';
+                $xml .= '<amount>' . $valorun . '</amount>';
+                $xml .= '<quantity>' . $qty . '</quantity>';
+                $xml .= '<weight>1000</weight>';
+            $xml .= '</item>';
+        $xml .= '</items>';
+        $xml .= '<reference>REF1234</reference>';
+        $xml .= '<sender>';
+            $xml .= '<name>José Comprador</name>';
+            $xml .= '<email>sounoob@sandbox.pagseguro.com.br</email>';
+            $xml .= '<phone>';
+                $xml .= '<areaCode>11</areaCode>';
+                $xml .= '<number>55663377</number>';
+            $xml .= '</phone>';
+        $xml .= '</sender>';
+        $xml .= '<shipping>';
+            $xml .= '<type>1</type>';
+            $xml .= '<address>';
+                $xml .= '<street>Rua sem nome</street>';
+                $xml .= '<number>1384</number>';
+                $xml .= '<complement>5o andar</complement>';
+                $xml .= '<district>Jardim Paulistano</district>';
+                $xml .= '<postalCode>01452002</postalCode>';
+                $xml .= '<city>Sao Paulo</city>';
+                $xml .= '<state>SP</state>';
+                $xml .= '<country>BRA</country>';
+            $xml .= '</address>';
+        $xml .= '</shipping>';
+    $xml .= '</checkout>';
 
 $curl = curl_init($url);
 curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -70,4 +76,4 @@ if(count($xml -> error) > 0){
     exit;
 }
 
-header('Location: https://pagseguro.uol.com.br/v2/checkout/payment.html?code=' . $xml -> code);
+header('Location: https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=' . $xml -> code);
